@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Книги</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class = "title-text">
+        <div class="press-start-2p-regular">Щоденник читача</div>
+        </div>
+        <button class = "button" onclick="window.location.href='http://127.0.0.1:5000/add';"><div class="press-start-2p-regular">Додати книгу</div></button>
+
+        <div class = "books">
+
+        <div class = "block">
+            <div class = "picture"></div>
+            <div class = "title"></div>
+            <div class = "author"></div>
+            <div class = "description"></div>
+            {% for i in range(5) %}
+               <div class = "star"></div>
+            {% endfor %}
+        </div>
+        </div>
+
+    </body>
+</html>
