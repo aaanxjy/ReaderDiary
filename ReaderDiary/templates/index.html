@@ -14,16 +14,20 @@
         <button class = "button" onclick="window.location.href='http://127.0.0.1:5000/add';"><div class="press-start-2p-regular">Додати книгу</div></button>
 
         <div class = "books">
+            {% for book in books %}
 
         <div class = "block">
             <div class = "picture"></div>
-            <div class = "title"></div>
-            <div class = "author"></div>
-            <div class = "description"></div>
+            <div class = "title"> <div class="press-start-2p-regular">{{book.title}}</div></div>
+            <div class = "author"><div class="press-start-2p-regular">{{book.author}}</div></div>
+            <div class = "description">{{book.description}}</div>
+            <div class = "stars-block">
             {% for i in range(5) %}
-               <div class = "star"></div>
+               <img class = "star" src="{{ url_for('static' , filename='unfilled_star.png') }}"> 
             {% endfor %}
+            </div>
         </div>
+        {% endfor %}
         </div>
 
     </body>
