@@ -32,6 +32,7 @@ def add_book():
     else:
        return render_template("newbook.html")
 
-
+@app.route("/edit/<string:book_title>", methods = ['POST', 'GET'])
+def edit_task():
 #@app.route("/rate/<string:book_title>")
 #def rate_book():

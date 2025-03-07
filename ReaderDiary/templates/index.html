@@ -18,12 +18,17 @@
 
         <div class = "block">
             <div class = "picture"></div>
-            <div class = "title"> <div class="press-start-2p-regular">{{book.title}}</div></div>
-            <div class = "author"><div class="press-start-2p-regular">{{book.author}}</div></div>
+            <div class = "title"> {{book.title}}</div>
+            <div class = "author">{{book.author}}</div>
+            <a class = "trash-bin-link" href = "http://127.0.0.1:5000/add"><img class = "trash-bin" src="{{ url_for('static' , filename='trash_bin.png') }}"></a>
+            <a class = "edit-link" href = "http://127.0.0.1:5000/add"><img class = "trash-bin" src="{{ url_for('static' , filename='edit_icon.png') }}"></a>
             <div class = "description">{{book.description}}</div>
             <div class = "stars-block">
-            {% for i in range(5) %}
-               <img class = "star" src="{{ url_for('static' , filename='unfilled_star.png') }}"> 
+            {% for i in range(book.stars) %}
+               <img class = "star" src="{{ url_for('static' , filename='filled_star.png') }}"> 
+            {% endfor %}
+            {% for i in range(5 - book.stars) %}
+            <img class = "star" src="{{ url_for('static' , filename='unfilled_star.png') }}"> 
             {% endfor %}
             </div>
         </div>

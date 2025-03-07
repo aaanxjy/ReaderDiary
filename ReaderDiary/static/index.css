@@ -17,7 +17,6 @@ body{
     font-size: 64px;
     top: 14%;
     position: absolute;
-    width: 100%;
     text-align: center;
 }
 
@@ -49,40 +48,135 @@ form{
 }
 
 .block{
+    display: grid;
+    grid-template-columns: 18% 37% 25% 20%;
+    grid-template-rows: repeat(3, 1fr);
     width: 100%;
-    height: 27%;
+    height: 172px;
     background-color:#FFFAB9;
     border: 1px solid black;
+    margin-bottom: 20px;
+
+}
+
+.books{
+    position: absolute;
+    top: 35%;
+    width: 70%;
+    margin-top: 20px;
 }
 
 .picture{
-    height: 85%;
-    width: 15%;
     border-radius: 10px;
     background-color: white;
     margin-left: 12px;
-    top: 7%;
-    position: relative;
     float: left;
+    height: 85%;
+    grid-column: 1;
+    grid-row-start: 1;
+    grid-row-end: 4;
+    margin-top: 5%;
+    width: 85%;
 }
+
+
+.stars-block{
+    grid-column: 4;
+    grid-row: 2;
+    width: 100%;
+    height: 100%;
+
+}
+.star{
+    width: 15%;
+    aspect-ratio: 1/1;
+    height: auto;
+
+}
+
+.title{
+    color: black;
+    font-size: 24px;
+    text-align: left;
+    font-family: "Press Start 2P", serif;
+    font-weight: 400;
+    font-style: normal;
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 5%;
+    overflow-x: scroll;
+}
+
+.author{
+    color: black;
+    font-size: 24px;
+    text-align: left;
+    font-family: "Press Start 2P", serif;
+    font-weight: 400;
+    font-style: normal;
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 3%;
+    overflow-x: scroll;
+}
+
+.description{
+    background-color: #FFFCD0;
+    height: 172px;
+    left: 40%;
+    width: 100%;
+    top: -27%;
+    overflow-y: scroll;
+    grid-column: 3;
+    grid-row-start: 1;
+    grid-row-end: 4;
+}
+
+.trash-bin{
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+}
+a{
+    grid-column: 2;
+    grid-row: 3;
+    width: 7%;
+    margin-top: 1.5%;
+}
+
+.edit-link{
+    margin-left: 8%;
+    width: 6% !important;
+    aspect-ratio: 1 / 1;
+    margin-top: 2%;
+}
+
+/*
+
 
 .title{
     color:black;
     font-size: 24px;
     top: 10%;
     left: 5%;
-    position: relative;
+    position: absolute;
     text-align: left;
     width: 30%;
+    font-family: "Press Start 2P", serif;
+    font-weight: 400;
+    font-style: normal;
 }
 .author{
     color:black;
     font-size: 24px;
     top: 25%;
     left: 5%;
-    position: relative;
+    position: absolute;
     text-align: left;
     width: 40%;
+    font-family: "Press Start 2P", serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 
@@ -94,7 +188,6 @@ form{
     position: absolute;
     top: 35%;
     width: 70%;
-    height: -webkit-fill-available;
 }
 
 .description{
@@ -121,3 +214,5 @@ form{
     height: auto;
 
 }
+
+–*/
