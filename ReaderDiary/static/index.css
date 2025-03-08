@@ -104,7 +104,8 @@ form{
     grid-column: 2;
     grid-row: 1;
     margin-top: 5%;
-    overflow-x: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .author{
@@ -117,7 +118,8 @@ form{
     grid-column: 2;
     grid-row: 2;
     margin-top: 3%;
-    overflow-x: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .description{
