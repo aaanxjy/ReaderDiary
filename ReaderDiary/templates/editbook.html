@@ -27,16 +27,18 @@
             </div>
             <div class="form-group">
               <label for="exampleFormControlTextarea1"><div class = "press-start-2p-regular">Опис</div></label>
-              <textarea class="form-control" name="description" rows="3" value="{{book.description}}" placeholder="{{book.description}}"></textarea>
+              <textarea class="form-control" name="description" rows="3">{{book.description}}</textarea>
             </div>
             <div class="form-group">
               <label for="exampleFormControlSelect1"><div class = "press-start-2p-regular">Оцінка з п'яти</div></label>
-              <select class="form-control" placeholder="{{book.stars}}" value="{{book.stars}}" name="stars">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+              <select class="form-control" placeholder="{{book.stars}}" name="stars">
+                {% for i in range(1, 6)%}
+                {% if book.stars == i %}
+                <option selected = "1">{{i}}</option>
+                {% else %}
+                <option>{{i}}</option>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
             <button type="submit" class="btn btn-danger"><div class = "press-start-2p-regular">Зберегти</div></button>
