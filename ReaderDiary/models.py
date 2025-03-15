@@ -1,13 +1,26 @@
 from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from flask_login import UserMixin
+from extensions import db
 
 class Book(db.Model):
-    title = db.Column(db.String, primary_key = True)
+    __tablename__ = "books" 
+    id = db.Column(db.Integer, primary_key = True)
+    title = db.Column(db.String,)
     picture = db.Column(db.String)
     author = db.Column(db.String, nullable = False)
     description = db.Column(db.String, nullable = False)
     stars = db.Column(db.Integer)
+    #user = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
+
+
+
+class User(db.Model, UserMixin):
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String, nullable = False)
+    password = db.Column(db.String, nullable = False)
+
+
 
 
 

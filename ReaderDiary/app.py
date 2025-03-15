@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
+from extensions import db
+from admin import admin
 
 from models import Book, db
 
@@ -7,6 +9,7 @@ from config import Config
 app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
+admin.init_app(app)
 
 with app.app_context():
     db.create_all()
