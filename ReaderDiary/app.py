@@ -1,20 +1,30 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from extensions import db
 from admin import admin
+from forms import LoginForm, RegistrationForm
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import login_user, logout_user
 
-from models import Book, db
+from models import Book, db, User
 
 from config import Config
+
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
 admin.init_app(app)
+app.config['SECRET_KEY'] = 'idk'
 
 with app.app_context():
     db.create_all()
     db.drop_all()
     db.create_all()
+    hashed_password = generate_password_hash("12345678")
+    admin = User(username = "Admin", password = hashed_password, rank = "Admin")
+    db.session.add(admin)
+    db.session.commit()
 
 @app.route("/")
 def index():
@@ -60,5 +70,29 @@ def delete_book(book_title):
     db.session.commit()
     return redirect(url_for("index"))
 
-#@app.route("/rate/<string:book_title>")
-#def rate_book():
+
+@app.route("/register", methods = ['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if request.method == 'POST':
+
+       if form.validate_on_submit():
+           existing_user = User.query.filter_by(
+               username=form.username.data
+           ).first()
+           if existing_user:
+               flash("Користувач з таким ім'ям вже існує!", "danger")
+               return redirect(url_for("register"))
+        
+           hashed_password = generate_password_hash(form.password.data)
+           user = User(username=form.username.data, password=hashed_password, rank = "Client")
+
+           db.session.add(user)
+           db.session.commit()
+
+           flash("Реєстрація пройшла успішно!", "success")
+           login_user(user)
+           return redirect(url_for("admin.index"))
+    else:
+       return render_template("register.html", form=form)
+

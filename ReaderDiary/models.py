@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String, nullable = False)
     password = db.Column(db.String, nullable = False)
+    rank = db.Column(db.String, nullable = False)
 
 
 
