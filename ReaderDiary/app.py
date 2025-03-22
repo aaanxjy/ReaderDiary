@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
-from extensions import db
+from flask import Flask, render_template, request, redirect, url_for, flash, request, make_response 
+from extensions import db, login_manager
 from admin import admin
 from forms import LoginForm, RegistrationForm
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -15,6 +15,17 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
 admin.init_app(app)
+login_manager.init_app(app)
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in Config.ALLOWED_EXTENSIONS
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
 app.config['SECRET_KEY'] = 'idk'
 
 with app.app_context():
@@ -27,10 +38,29 @@ with app.app_context():
     db.session.commit()
 
 @app.route("/")
+def homepage():
+    return redirect(url_for("register"))
+
+
+@app.route("/account")
 def index():
-    books = Book.query.all()
+    user = int(request.cookies.get('UserId'))
+    books = [book for book in Book.query.all() if book.user == user]
+    if books:
+       print(books[0].title)
     return render_template("index.html", books = books)
 
+
+@app.route('/setcookie/<string:user_id>', methods = ['POST', 'GET'])
+def setcookie(user_id):
+   if load_user(user_id).rank == "Admin":
+       resp = redirect(url_for("admin.index"))
+   else:
+       resp = redirect(url_for("index"))
+
+   resp.set_cookie('UserId', user_id)
+
+   return resp
 
 @app.route("/add", methods = ['POST', 'GET'])
 def add_book():
@@ -40,16 +70,17 @@ def add_book():
        description = request.form["description"].strip()
        #picture = request.form["pic"].strip()
        stars = int(request.form["stars"])
-       new_book = Book(title = title, author = author, description = description, stars = stars) #picture = picture)
+       user = request.cookies.get('UserId') 
+       new_book = Book(title = title, author = author, description = description, stars = stars, user = user) #picture = picture)
        db.session.add(new_book)
        db.session.commit()
        return redirect(url_for("index"))
     else:
        return render_template("newbook.html")
 
-@app.route("/edit/<string:book_title>", methods = ['POST', 'GET'])
-def edit_book(book_title):
-    book = Book.query.get(book_title)
+@app.route("/edit/<string:book_id>", methods = ['POST', 'GET'])
+def edit_book(book_id):
+    book = Book.query.get(book_id)
     if request.method == 'POST':
        book.title = request.form["title"].strip()
        book.author = request.form["author"].strip()
@@ -63,9 +94,9 @@ def edit_book(book_title):
         return render_template("editbook.html", book = book)
     
 
-@app.route("/delete/<string:book_title>", methods = ['POST', 'GET'])
-def delete_book(book_title):
-    book = Book.query.get(book_title)
+@app.route("/delete/<string:book_id>", methods = ['POST', 'GET'])
+def delete_book(book_id):
+    book = Book.query.get(book_id)
     db.session.delete(book)
     db.session.commit()
     return redirect(url_for("index"))
@@ -92,7 +123,35 @@ def register():
 
            flash("Реєстрація пройшла успішно!", "success")
            login_user(user)
-           return redirect(url_for("admin.index"))
+           return redirect(url_for("setcookie", user_id = user.id))
     else:
        return render_template("register.html", form=form)
+    
+
+@app.route("/login", methods = ['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if request.method == 'POST':
+
+       if form.validate_on_submit():
+           user = User.query.filter_by(
+               username=form.username.data
+           ).first()
+           if user and check_password_hash(user.password, form.password.data):
+               login_user(user)
+               flash("Вхід пройшов успішно!", "success")
+               return redirect(url_for("setcookie", user_id = user.id))
+           else:
+               flash("Неправильне ім'я користувача або пароль", "danger")
+               return redirect(url_for("login"))
+    else:
+       return render_template("login.html", form=form)
+    
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("homepage"))
+
+
 

@@ -31,3 +31,14 @@ body{
 .block{
     margin-bottom: 20px;
 }
+
+.form-title{
+    font-family: "Press Start 2P", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 40px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+
+}

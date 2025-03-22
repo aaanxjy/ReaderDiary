@@ -24,8 +24,8 @@
               {% endif %}
             {% endwith %}
         
-            <div class = "form-title">Реєстрація</div>
-            <form method="post" action="{{ url_for('register') }}">
+            <div class = "form-title">Вхід у акаунт</div>
+            <form method="post" action="{{ url_for('login') }}">
                 {{ form.hidden_tag() }}
                 <div class = "block">
                     <label for="username"><div class = "press-start-2p-regular">Логін:</div></label>
@@ -41,10 +41,10 @@
                         <p class="error">{{ error }}</p>
                     {% endfor %}
                 </div>
-                <button type="submit" class="btn btn-danger"><div class = "press-start-2p-regular">Зареєструватися</div></button>
+                <button type="submit" class="btn btn-danger"><div class = "press-start-2p-regular">Увійти</div></button>
             </form>
             <br>
-            <a class = "press-start-2p-regular" href = "{{ url_for('login')}}">Вже є акаунт? Увійти</a>
+            <a class = "press-start-2p-regular" href = "{{ url_for('register')}}">Ще нема акаунту? Зареєструватися</a>
         </div>
     </body>
-</html>
+</html></html>

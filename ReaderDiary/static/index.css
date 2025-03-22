@@ -153,6 +153,15 @@ a{
     margin-top: 2%;
 }
 
+.logout{
+    position: fixed;
+    right: 20px;
+    top: 40px;
+    font-family: "Press Start 2P", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
 /*
 
 

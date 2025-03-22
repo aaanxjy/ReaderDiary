@@ -13,6 +13,8 @@
         </div>
         <button class = "button" onclick="window.location.href='http://127.0.0.1:5000/add';"><div class="press-start-2p-regular">Додати книгу</div></button>
 
+        <a class = "logout" href = "{{ url_for('logout') }}">Вийти</a> 
+
         <div class = "books">
             {% for book in books %}
 
@@ -20,8 +22,8 @@
             <div class = "picture"></div>
             <div class = "title"> {{book.title}}</div>
             <div class = "author">{{book.author}}</div>
-            <a class = "trash-bin-link" href = "{{ url_for('delete_book', book_title=book.title) }}"><img class = "trash-bin" src="{{ url_for('static' , filename='trash_bin.png') }}"></a>
-            <a class = "edit-link" href = "{{ url_for('edit_book', book_title=book.title) }}"><img class = "trash-bin" src="{{ url_for('static' , filename='edit_icon.png') }}"></a>
+            <a class = "trash-bin-link" href = "{{ url_for('delete_book', book_id=book.id) }}"><img class = "trash-bin" src="{{ url_for('static' , filename='trash_bin.png') }}"></a>
+            <a class = "edit-link" href = "{{ url_for('edit_book', book_id=book.id) }}"><img class = "trash-bin" src="{{ url_for('static' , filename='edit_icon.png') }}"></a>
             <div class = "description">{{book.description}}</div>
             <div class = "stars-block">
             {% for i in range(book.stars) %}
